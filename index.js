@@ -112,12 +112,12 @@ function entropyToMnemonic (entropy, wordlist) {
   return wordlist === JAPANESE_WORDLIST ? words.join('\u3000') : words.join(' ')
 }
 
-function generateMnemonic (strength, rng, wordlist) {
+async function generateMnemonic (strength, rng, wordlist) {
   strength = strength || 128
   if (strength % 32 !== 0) throw new TypeError(INVALID_ENTROPY)
   rng = rng || randomBytes
 
-  return entropyToMnemonic(rng(strength / 8), wordlist)
+  return entropyToMnemonic(await rng(strength / 8), wordlist)
 }
 
 function validateMnemonic (mnemonic, wordlist) {
